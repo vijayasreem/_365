@@ -1,56 +1,72 @@
+.
+
 package com.Sacral.com.controller;
 
-import com.Sacral.com.model.Endorsement;
-import com.Sacral.com.service.EndorsementService;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.Sacral.com.entity.Endorsement;
+import com.Sacral.com.service.EndorsementService;
+
 @RestController
 @RequestMapping("/endorsement")
 public class EndorsementController {
-    
-    @Autowired
+	
+	@Autowired
     private EndorsementService endorsementService;
-    
-    @PostMapping("/initiate")
-    public ResponseEntity<Endorsement> initiateEndorsement(@RequestBody Endorsement endorsement) {
-        // Initiate Endorsement logic
-        Endorsement response = endorsementService.initiateEndorsement(endorsement);
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
+	
+	@GetMapping("/mph/{mph}")
+    public ResponseEntity<Endorsement> findByMph(@PathVariable String mph) {
+        Endorsement endorsement = endorsementService.findByMph(mph);
+        return ResponseEntity.ok(endorsement);
     }
-    
-    @GetMapping("/findByEndorsementNumber")
-    public ResponseEntity<Endorsement> findByEndorsementNumber(@RequestParam String endorsementNumber) {
-        Endorsement response = endorsementService.findByEndorsementNumber(endorsementNumber);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+	
+	@GetMapping("/trust/{trust}")
+    public ResponseEntity<Endorsement> findByTrust(@PathVariable String trust) {
+        Endorsement endorsement = endorsementService.findByTrust(trust);
+        return ResponseEntity.ok(endorsement);
     }
-    
-    @GetMapping("/findByEndorsementProcessingDate")
-    public ResponseEntity<Endorsement> findByEndorsementProcessingDate(@RequestParam String endorsementProcessingDate) {
-        Endorsement response = endorsementService.findByEndorsementProcessingDate(endorsementProcessingDate);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+	
+	@GetMapping("/customer/{customer}")
+    public ResponseEntity<Endorsement> findByCustomer(@PathVariable String customer) {
+        Endorsement endorsement = endorsementService.findByCustomer(customer);
+        return ResponseEntity.ok(endorsement);
     }
-    
-    @GetMapping("/findByEndorsementStatus")
-    public ResponseEntity<Endorsement> findByEndorsementStatus(@RequestParam String endorsementStatus) {
-        Endorsement response = endorsementService.findByEndorsementStatus(endorsementStatus);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+	
+	@PostMapping
+    public ResponseEntity<Endorsement> saveEndorsement(@RequestBody Endorsement endorsement) {
+        Endorsement savedEndorsement = endorsementService.saveEndorsement(endorsement);
+        return ResponseEntity.ok(savedEndorsement);
     }
-    
-    @DeleteMapping("/delete")
-    public ResponseEntity<Void> delete(@RequestBody Endorsement endorsement) {
-        endorsementService.delete(endorsement);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	
+	@PutMapping
+    public ResponseEntity<Endorsement> updateEndorsement(@RequestBody Endorsement endorsement) {
+        Endorsement updatedEndorsement = endorsementService.updateEndorsement(endorsement);
+        return ResponseEntity.ok(updatedEndorsement);
     }
-    
-    @PutMapping("/update")
-    public ResponseEntity<Endorsement> update(@RequestBody Endorsement endorsement) {
-        Endorsement response = endorsementService.update(endorsement);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+	
+	@GetMapping
+    public ResponseEntity<List<Endorsement>> getAllEndorsements() {
+        List<Endorsement> endorsements = endorsementService.getAllEndorsements();
+        return ResponseEntity.ok(endorsements);
+    }
+	
+	@DeleteMapping("/{id}")
+    public void deleteEndorsement(@PathVariable Long id) {
+        endorsementService.deleteEndorsement(id);
+    }
+	
+	public void handleEndorsementEffectiveTypes(Endorsement endorsement){
+        endorsementService.handleEndorsementEffectiveTypes(endorsement);
     }
 }

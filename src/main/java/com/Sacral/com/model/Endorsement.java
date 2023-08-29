@@ -1,57 +1,61 @@
 package com.Sacral.com.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="endorsement")
 public class Endorsement {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name="id")
     private Long id;
     
-    private String endorsementNumber;
+    @Column(name="mph")
+    private String mph;
     
-    private String endorsementProcessingDate;
+    @Column(name="trust")
+    private String trust;
     
-    private String endorsementStatus;
-    
-    public Endorsement() {
-        
-    }
-    
+    @Column(name="customer")
+    private String customer;
+
     public Long getId() {
         return id;
     }
-    
+
     public void setId(Long id) {
         this.id = id;
     }
-    
-    public String getEndorsementNumber() {
-        return endorsementNumber;
+
+    public String getMph() {
+        return mph;
+    }
+
+    public void setMph(String mph) {
+        this.mph = mph;
+    }
+
+    public String getTrust() {
+        return trust;
+    }
+
+    public void setTrust(String trust) {
+        this.trust = trust;
+    }
+
+    public String getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(String customer) {
+        this.customer = customer;
     }
     
-    public void setEndorsementNumber(String endorsementNumber) {
-        this.endorsementNumber = endorsementNumber;
-    }
-    
-    public String getEndorsementProcessingDate() {
-        return endorsementProcessingDate;
-    }
-    
-    public void setEndorsementProcessingDate(String endorsementProcessingDate) {
-        this.endorsementProcessingDate = endorsementProcessingDate;
-    }
-    
-    public String getEndorsementStatus() {
-        return endorsementStatus;
-    }
-    
-    public void setEndorsementStatus(String endorsementStatus) {
-        this.endorsementStatus = endorsementStatus;
-    }
     
 }

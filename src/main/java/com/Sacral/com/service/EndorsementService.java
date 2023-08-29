@@ -1,37 +1,51 @@
+.
+
 package com.Sacral.com.service;
 
-import com.Sacral.com.model.Endorsement;
-import com.Sacral.com.repository.EndorsementRepository;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.Sacral.com.entity.Endorsement;
+import com.Sacral.com.repository.EndorsementRepository;
+
 @Service
 public class EndorsementService {
-    
+	
     @Autowired
     private EndorsementRepository endorsementRepository;
     
-    public Endorsement initiateEndorsement(Endorsement endorsement) {
+    public Endorsement findByMph(String mph) {
+        return endorsementRepository.findByMph(mph);
+    }
+
+    public Endorsement findByTrust(String trust) {
+        return endorsementRepository.findByTrust(trust);
+    }
+
+    public Endorsement findByCustomer(String customer) {
+        return endorsementRepository.findByCustomer(customer);
+    }
+    
+    public Endorsement saveEndorsement(Endorsement endorsement) {
         return endorsementRepository.save(endorsement);
     }
     
-    public Endorsement findByEndorsementNumber(String endorsementNumber) {
-        return endorsementRepository.findByEndorsementNumber(endorsementNumber);
+    public Endorsement updateEndorsement(Endorsement endorsement) {
+        return endorsementRepository.update(endorsement);
     }
     
-    public Endorsement findByEndorsementProcessingDate(String endorsementProcessingDate) {
-        return endorsementRepository.findByEndorsementProcessingDate(endorsementProcessingDate);
+    public List<Endorsement> getAllEndorsements() {
+        return endorsementRepository.findAll();
     }
     
-    public Endorsement findByEndorsementStatus(String endorsementStatus) {
-        return endorsementRepository.findByEndorsementStatus(endorsementStatus);
+    public void deleteEndorsement(Long id) {
+        endorsementRepository.deleteById(id);
     }
     
-    public void delete(Endorsement endorsement) {
-        endorsementRepository.delete(endorsement);
+    public void handleEndorsementEffectiveTypes(Endorsement endorsement){
+        //business logic for handling different endorsement effective types
     }
     
-    public void update(Endorsement endorsement) {
-        endorsementRepository.save(endorsement);
-    }
 }
